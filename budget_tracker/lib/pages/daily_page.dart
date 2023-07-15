@@ -1,3 +1,4 @@
+import 'package:budget_tracker/json/day_month.dart';
 import 'package:budget_tracker/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,8 @@ class DailyPage extends StatefulWidget {
 }
 
 class _DailyPageState extends State<DailyPage> {
+  int activeDay = 4;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,35 +60,52 @@ class _DailyPageState extends State<DailyPage> {
                   const SizedBox(height: 25),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: (size.width - 40) / 7,
-                        child: Column(
-                          children: [
-                            const Text(
-                              'Sun',
-                              style: TextStyle(fontSize: 10),
-                            ),
-                            const SizedBox(height: 10),
-                            Container(
-                              width: 30,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: primary,
-                                shape: BoxShape.circle,
-                                border: Border.all(color: primary),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '1',
-                                  style: TextStyle(fontSize: 10, color: white),
+                    children: List.generate(
+                      days.length,
+                      (index) {
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              activeDay = index;
+                            });
+                          },
+                          child: Container(
+                            width: (size.width - 40) / 7,
+                            child: Column(
+                              children: [
+                                Text(
+                                  days[index]['label'],
+                                  style: const TextStyle(fontSize: 10),
                                 ),
-                              ),
+                                const SizedBox(height: 10),
+                                Container(
+                                  width: 30,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    color: activeDay == index
+                                        ? primary
+                                        : Colors.transparent,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: activeDay == index
+                                          ? primary
+                                          : black.withOpacity(0.1),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      days[index]['day'],
+                                      style: const TextStyle(
+                                          fontSize: 10, color: white),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                    ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),
