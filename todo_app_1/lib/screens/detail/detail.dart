@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app_1/models/task.dart';
 import 'package:todo_app_1/screens/detail/widgets/datepicker.dart';
+import 'package:todo_app_1/screens/detail/widgets/task_timeline.dart';
 import 'package:todo_app_1/screens/detail/widgets/task_title.dart';
 
 class DetailPage extends StatelessWidget {
@@ -9,6 +10,7 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final detailList = task.desc;
     return Scaffold(
       backgroundColor: Colors.black,
       body: CustomScrollView(
@@ -32,6 +34,29 @@ class DetailPage extends StatelessWidget {
               ),
             ),
           ),
+          detailList == null || detailList.isEmpty
+              ? SliverFillRemaining(
+                  child: Container(
+                    color: Colors.white,
+                    child: const Center(
+                      child: Text(
+                        'No task today',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (_, index) => TaskTimeline(
+                      detail: detailList[index],
+                    ),
+                    childCount: detailList.length,
+                  ),
+                ),
         ],
       ),
     );
