@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app_1/screens/home/widgets/go_premium.dart';
+import 'package:todo_app_1/screens/home/widgets/tasks.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -9,11 +10,73 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: _buildAppBar(),
-      body: const Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          GoPremium(),
+          const GoPremium(),
+          Container(
+            padding: const EdgeInsets.all(15),
+            child: const Text(
+              'Tasks',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(child: Tasks()),
         ],
+      ),
+      bottomNavigationBar: _buildBottomNavigationBar(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.black,
+        onPressed: () {},
+        child: const Icon(
+          Icons.add,
+          size: 35,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBottomNavigationBar() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 5,
+              blurRadius: 10,
+            ),
+          ]),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          selectedItemColor: Colors.blueAccent,
+          unselectedItemColor: Colors.grey.withOpacity(0.5),
+          items: const [
+            BottomNavigationBarItem(
+              label: 'Home',
+              icon: Icon(Icons.home),
+            ),
+            BottomNavigationBarItem(
+              label: 'Person',
+              icon: Icon(Icons.person_rounded),
+            ),
+          ],
+        ),
       ),
     );
   }
