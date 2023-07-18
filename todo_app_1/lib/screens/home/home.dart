@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const GoPremium(),
+          // const GoPremium(),
           Container(
             padding: const EdgeInsets.all(15),
             child: const Text(

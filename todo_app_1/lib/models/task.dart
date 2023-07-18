@@ -10,6 +10,7 @@ class Task {
   num? left;
   num? done;
   bool isLast;
+  List<Map<String, dynamic>>? desc;
 
   Task({
     this.iconData,
