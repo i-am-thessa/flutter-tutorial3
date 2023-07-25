@@ -13,17 +13,8 @@ class ThemeService {
 
   void switchTheme() {
     bool loadThemeBox = _loadThemeFromBox();
-    print('********switchTheme()******');
-    print('********_loadThemeFromBox()=$loadThemeBox******');
-    print('********ThemeService().theme()=${ThemeService().theme}******');
-
     Get.changeThemeMode(loadThemeBox ? ThemeMode.light : ThemeMode.dark);
     Get.forceAppUpdate();
-
     _saveThemeToBox((!loadThemeBox));
-
-    print('********ThemeService().theme()=${ThemeService().theme}******');
-
-    print('********switchTheme()loadThemeBox=${!loadThemeBox} saved******');
   }
 }

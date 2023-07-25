@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app_2/services/theme_service.dart';
-import 'package:get/get.dart';
+import 'package:todo_app_2/ui/add_task_page.dart';
 import 'package:todo_app_2/ui/theme.dart';
 import 'package:todo_app_2/ui/widgets/button.dart';
 
@@ -15,6 +15,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  DateTime _selectedDate = DateTime.now();
+
+  @override
+  void initState() {
+    // TODO: implement NOTIFICATION
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,18 +30,28 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           _addTaskBar(),
-          Container(
-            padding: const EdgeInsets.all(5),
-            child: DatePicker(
-              DateTime.now(),
-              height: 100,
-              width: 80,
-              initialSelectedDate: DateTime.now(),
-              selectionColor: primaryClr,
-              selectedTextColor: Colors.white,
-            ),
-          ),
+          _addDateBar(),
         ],
+      ),
+    );
+  }
+
+  Container _addDateBar() {
+    return Container(
+      margin: const EdgeInsets.only(top: 20, left: 20),
+      child: DatePicker(
+        DateTime.now(),
+        height: 100,
+        width: 80,
+        initialSelectedDate: DateTime.now(),
+        selectionColor: primaryClr,
+        selectedTextColor: Colors.white,
+        dateTextStyle: datePickerDateTextStyle,
+        dayTextStyle: datePickerDayTextStyle,
+        monthTextStyle: datePickerMonthTextStyle,
+        onDateChange: (date) {
+          _selectedDate = date;
+        },
       ),
     );
   }
@@ -55,7 +73,15 @@ class _HomePageState extends State<HomePage> {
               Text("Today", style: headingStyle),
             ],
           ),
-          MyButton(label: "+ Add Task", onTap: () {}),
+          MyButton(
+            label: "+ Add Task",
+            onTap: () {
+
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const AddTaskPage(),
+              ));
+            },
+          ),
         ],
       ),
     );
