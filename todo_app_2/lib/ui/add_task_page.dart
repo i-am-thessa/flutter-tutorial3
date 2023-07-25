@@ -17,6 +17,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
   int _selectedRemind = 5;
   List<int> listRemind = [5, 10, 15, 20];
+  String _selectedRepeat = "";
+  List<String> listRepeat = ["None", "Daily", "Weekly", "Monthly"];
+  int _selectedColor = 0;
 
   TextEditingController _taskTitleController = TextEditingController();
   TextEditingController _notesController = TextEditingController();
@@ -134,16 +137,74 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   underline: Container(height: 0),
                 ),
               ),
-              // MyInputField(
-              //     title: 'Repeat',
-              //     hint: 'Enter repeat here',
-              //     controller: _repeatController,
-              //     widget: widget),
-              // MyInputField(
-              //     title: 'Color and Create Task',
-              //     hint: 'Create color and button row here',
-              //     controller: _taskTitleController,
-              //     widget: widget),
+              MyInputField(
+                title: 'Repeat',
+                hint: _selectedRepeat,
+                controller: _repeatController,
+                widget: DropdownButton(
+                  items: listRepeat.map<DropdownMenuItem<String>>((value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value,
+                          style: const TextStyle(color: Colors.grey)),
+                    );
+                  }).toList(),
+                  onChanged: (String? value) {
+                    setState(
+                      () {
+                        _selectedRepeat = value!;
+                      },
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Colors.grey,
+                  ),
+                  iconSize: 32,
+                  elevation: 4,
+                  style: subTitleStyle,
+                  underline: Container(height: 0),
+                ),
+              ),
+              const SizedBox(height: 18),
+              Row(children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Color",
+                      style: titleStyle,
+                    ),
+                    const SizedBox(height: 8.0),
+                    Wrap(
+                      children: List<Widget>.generate(3, (int index) {
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedColor = index;
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: CircleAvatar(
+                              radius: 14,
+                              backgroundColor: index == 0
+                                  ? primaryClr
+                                  : index == 1
+                                      ? pinkClr
+                                      : yellowClr,
+                              child: _selectedColor == index
+                                  ? const Icon(Icons.done,
+                                      color: Colors.white, size: 16)
+                                  : Container(),
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
+                  ],
+                )
+              ]),
             ],
           ),
         ),
