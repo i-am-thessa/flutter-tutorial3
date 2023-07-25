@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app_2/ui/theme.dart';
+import 'package:todo_app_2/ui/widgets/button.dart';
 import 'package:todo_app_2/ui/widgets/input_field.dart';
 
 class AddTaskPage extends StatefulWidget {
@@ -167,48 +168,56 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 ),
               ),
               const SizedBox(height: 18),
-              Row(children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Color",
-                      style: titleStyle,
-                    ),
-                    const SizedBox(height: 8.0),
-                    Wrap(
-                      children: List<Widget>.generate(3, (int index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _selectedColor = index;
-                            });
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: CircleAvatar(
-                              radius: 14,
-                              backgroundColor: index == 0
-                                  ? primaryClr
-                                  : index == 1
-                                      ? pinkClr
-                                      : yellowClr,
-                              child: _selectedColor == index
-                                  ? const Icon(Icons.done,
-                                      color: Colors.white, size: 16)
-                                  : Container(),
-                            ),
-                          ),
-                        );
-                      }),
-                    ),
-                  ],
-                )
-              ]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _colorPalette(),
+                  MyButton(label: "Create Task", onTap: () => null),
+                ],
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Column _colorPalette() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Color",
+          style: titleStyle,
+        ),
+        const SizedBox(height: 8.0),
+        Wrap(
+          children: List<Widget>.generate(3, (int index) {
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  _selectedColor = index;
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: CircleAvatar(
+                  radius: 14,
+                  backgroundColor: index == 0
+                      ? primaryClr
+                      : index == 1
+                          ? pinkClr
+                          : yellowClr,
+                  child: _selectedColor == index
+                      ? const Icon(Icons.done, color: Colors.white, size: 16)
+                      : Container(),
+                ),
+              ),
+            );
+          }),
+        ),
+      ],
     );
   }
 
