@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app_1/screens/home/widgets/go_premium.dart';
 import 'package:todo_app_1/screens/home/widgets/tasks.dart';
 
 class HomePage extends StatelessWidget {
