@@ -6,14 +6,14 @@ class MyInputField extends StatelessWidget {
   final String title;
   final String hint;
   final TextEditingController? controller;
-  final Widget widget;
+  final Widget? widget;
 
   const MyInputField({
     Key? key,
     required this.title,
     required this.hint,
-    required this.controller,
-    required this.widget,
+    this.controller,
+    this.widget,
   }) : super(key: key);
 
   @override
@@ -44,6 +44,7 @@ class MyInputField extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextFormField(
+                    readOnly: widget == null ? false : true,
                     autofocus: false,
                     cursorColor:
                         Get.isDarkMode ? Colors.grey[100] : Colors.grey[700],
@@ -63,6 +64,7 @@ class MyInputField extends StatelessWidget {
                     ),
                   ),
                 ),
+                widget == null ? Container() : Container(child: widget),
               ],
             ),
           ),
