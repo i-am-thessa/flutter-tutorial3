@@ -13,6 +13,9 @@ class AddTaskPage extends StatefulWidget {
 
 class _AddTaskPageState extends State<AddTaskPage> {
   DateTime _selectedDate = DateTime.now();
+  String _endTime = "9:30 PM";
+  String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
+
   TextEditingController _taskTitleController = TextEditingController();
   TextEditingController _notesController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
@@ -62,27 +65,47 @@ class _AddTaskPageState extends State<AddTaskPage> {
                     color: Colors.grey,
                   ),
                   onPressed: () {
-                    print("hi there");
                     _getDateFromUser();
                   },
                 ),
               ),
-              // Expanded(
-              //   child: Row(
-              //     children: [
-              //       MyInputField(
-              //           title: 'Start Time',
-              //           hint: 'Create Start and End Time Row here',
-              //           controller: _timeStartController,
-              //           widget: widget),
-              //       MyInputField(
-              //           title: 'End Time',
-              //           hint: 'Create Start and End Time Row here',
-              //           controller: _timeEndController,
-              //           widget: widget),
-              //     ],
-              //   ),
-              // ),
+              Row(
+                children: [
+                  Expanded(
+                    child: MyInputField(
+                      title: 'Start Time',
+                      hint: _startTime,
+                      controller: _timeStartController,
+                      widget: IconButton(
+                        icon: const Icon(
+                          Icons.access_time_rounded,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          _getTimeFromUser(isStartTime: true);
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: MyInputField(
+                      title: 'End Time',
+                      hint: _endTime,
+                      controller: _timeEndController,
+                      widget: IconButton(
+                        icon: const Icon(
+                          Icons.access_time_rounded,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          _getTimeFromUser(isStartTime: false);
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               // MyInputField(
               //     title: 'Remind',
               //     hint: 'Enter reminder here',
@@ -137,13 +160,42 @@ class _AddTaskPageState extends State<AddTaskPage> {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2015),
-      lastDate: DateTime(2030),
+      lastDate: DateTime(2130),
     );
 
     if (_pickerDate != null) {
-      _selectedDate = _pickerDate;
+      setState(() {
+        _selectedDate = _pickerDate;
+      });
     } else {
       print("Null or Something is Wrong");
     }
+  }
+
+  _getTimeFromUser({required bool isStartTime}) async {
+    var _pickedTime = await _showTimePicker();
+    String _formattedTime = _pickedTime.format(context);
+    if (_pickedTime == null) {
+      print("time cancelled");
+    } else if (isStartTime == true) {
+      setState(() {
+        _startTime = _formattedTime;
+      });
+    } else if (isStartTime == false) {
+      setState(() {
+        _endTime = _formattedTime;
+      });
+    }
+  }
+
+  _showTimePicker() {
+    return showTimePicker(
+      context: context,
+      initialEntryMode: TimePickerEntryMode.input,
+      initialTime: TimeOfDay(
+        hour: int.parse(_startTime.split(":")[0]),
+        minute: int.parse(_startTime.split(":")[1].split(" ")[0]),
+      ),
+    );
   }
 }
