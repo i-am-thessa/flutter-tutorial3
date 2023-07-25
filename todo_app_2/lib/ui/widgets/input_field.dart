@@ -32,7 +32,7 @@ class MyInputField extends StatelessWidget {
           Container(
             height: 52,
             margin: const EdgeInsets.only(top: 8.0),
-            padding: const EdgeInsets.only(left: 14.0, right: 14.0),
+            padding: const EdgeInsets.only(left: 14.0),
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.grey,
@@ -59,6 +59,7 @@ class MyInputField extends StatelessWidget {
                         ),
                         borderRadius: BorderRadius.circular(12),
                       ),
+                      enabledBorder: InputBorder.none,
                     ),
                   ),
                 ),
