@@ -1,3 +1,4 @@
+import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -20,26 +21,41 @@ class _HomePageState extends State<HomePage> {
       appBar: _appBar(),
       body: Column(
         children: [
+          _addTaskBar(),
           Container(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      DateFormat.yMMMd().format(DateTime.now()),
-                      style: subHeadingStyle,
-                    ),
-                    const SizedBox(height: 5),
-                    Text("Today", style: headingStyle),
-                  ],
-                ),
-                MyButton(label: "+ Add Task", onTap: () {}),
-              ],
+            padding: const EdgeInsets.all(5),
+            child: DatePicker(
+              DateTime.now(),
+              height: 100,
+              width: 80,
+              initialSelectedDate: DateTime.now(),
+              selectionColor: primaryClr,
+              selectedTextColor: Colors.white,
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Container _addTaskBar() {
+    return Container(
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                DateFormat.yMMMd().format(DateTime.now()),
+                style: subHeadingStyle,
+              ),
+              const SizedBox(height: 5),
+              Text("Today", style: headingStyle),
+            ],
+          ),
+          MyButton(label: "+ Add Task", onTap: () {}),
         ],
       ),
     );
