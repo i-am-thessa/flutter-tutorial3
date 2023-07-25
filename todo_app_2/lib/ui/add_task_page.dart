@@ -15,6 +15,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
   DateTime _selectedDate = DateTime.now();
   String _endTime = "9:30 PM";
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
+  int _selectedRemind = 5;
+  List<int> listRemind = [5, 10, 15, 20];
 
   TextEditingController _taskTitleController = TextEditingController();
   TextEditingController _notesController = TextEditingController();
@@ -106,11 +108,32 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   ),
                 ],
               ),
-              // MyInputField(
-              //     title: 'Remind',
-              //     hint: 'Enter reminder here',
-              //     controller: _reminderController,
-              //     widget: widget),
+              MyInputField(
+                title: 'Remind',
+                hint: "$_selectedRemind minutes early",
+                controller: _reminderController,
+                widget: DropdownButton(
+                  items: listRemind.map<DropdownMenuItem<String>>((int value) {
+                    return DropdownMenuItem<String>(
+                      value: value.toString(),
+                      child: Text(value.toString()),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedRemind = int.parse(value!);
+                    });
+                  },
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Colors.grey,
+                  ),
+                  iconSize: 32,
+                  elevation: 4,
+                  style: subTitleStyle,
+                  underline: Container(height: 0),
+                ),
+              ),
               // MyInputField(
               //     title: 'Repeat',
               //     hint: 'Enter repeat here',
